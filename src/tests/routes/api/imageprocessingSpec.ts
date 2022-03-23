@@ -26,11 +26,6 @@ describe('Image Processing', () => {
             await imageprocessing(testWidth, testHeight);
         }).not.toThrow();
     });
-
-    it('checks the api deletion response status', async () => {
-        const response = await request.delete('/api/imageprocessing/deletethumbnails')
-        expect(response.statusCode).toBe(200);
-    });
 });
 
 describe('Check input values', () => {
