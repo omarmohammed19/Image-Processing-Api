@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var __1 = __importDefault(require("../../.."));
+var imageprocessingService_1 = __importDefault(require("../../../routes/api/imageprocessingService"));
 var request = (0, supertest_1.default)(__1.default);
 describe('Test endpoints responses', function () {
     it('checks the api resizing response status', function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -52,6 +53,43 @@ describe('Test endpoints responses', function () {
                     response = _a.sent();
                     expect(response.statusCode).toBe(200);
                     expect(response.body.length).toBeDefined();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('checks the api deletion response status', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.delete('/api/imageprocessing/deletethumbnails')];
+                case 1:
+                    response = _a.sent();
+                    expect(response.statusCode).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('Image Processing', function () {
+    it('checks the processing of the image', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var testWidth, testHeight, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    testWidth = 500, testHeight = 500;
+                    return [4 /*yield*/, request.get('/api/imageprocessing?width=200&height=200')];
+                case 1:
+                    response = _a.sent();
+                    expect(function () { return __awaiter(void 0, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, (0, imageprocessingService_1.default)(testWidth, testHeight)];
+                                case 1:
+                                    _a.sent();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); }).not.toThrow();
                     return [2 /*return*/];
             }
         });

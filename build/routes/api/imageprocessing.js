@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -41,49 +41,58 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var path_1 = __importDefault(require("path"));
-var sharp_1 = __importDefault(require("sharp"));
 var fs_1 = __importDefault(require("fs"));
+var imageprocessingService_1 = __importDefault(require("./imageprocessingService"));
 var cacher_1 = __importDefault(require("../../utilities/cacher"));
 var image = express_1.default.Router();
-image.get("/", cacher_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                try {
-                    if (!fs_1.default.existsSync("thumbnails")) {
-                        fs_1.default.mkdirSync("thumbnails");
+image.get("/", cacher_1.default, function (req, res) {
+    return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    try {
+                        if (!fs_1.default.existsSync("thumbnails")) {
+                            fs_1.default.mkdirSync("thumbnails");
+                        }
                     }
-                }
-                catch (err) {
-                    console.error(err);
-                }
-                return [4 /*yield*/, (0, sharp_1.default)('public/assests/encenadaport.jpg')
-                        .resize(parseInt(req.query.width), parseInt(req.query.height))
-                        .toFile("thumbnails/encenadport_".concat(req.query.width, "_").concat(req.query.height, ".jpg"))];
-            case 1:
-                _a.sent();
-                res.status(200).sendFile(path_1.default.resolve("thumbnails/encenadport_".concat(req.query.width, "_").concat(req.query.height, ".jpg")));
-                return [2 /*return*/];
-        }
-    });
-}); });
-image.delete("/:deletethumbnails", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var directory;
-    return __generator(this, function (_a) {
-        directory = "thumbnails";
-        fs_1.default.readdir(directory, function (err, files) {
-            if (err)
-                throw err;
-            for (var _i = 0, files_1 = files; _i < files_1.length; _i++) {
-                var file = files_1[_i];
-                fs_1.default.unlink(path_1.default.join(directory, file), function (err) {
-                    if (err)
-                        throw err;
-                });
+                    catch (err) {
+                        res.send(err);
+                    }
+                    if (Number(req.query.width) <= 0 || Number(req.query.width) == null) {
+                        res.send("Missing or Invalid input for width of : ".concat(req.query.width));
+                        throw new Error("Missing or Invalid input for width of : ".concat(req.query.width));
+                    }
+                    if (Number(req.query.height) <= 0 || Number(req.query.height) == null) {
+                        res.send("Missing or Invalid input for height of : ".concat(req.query.height));
+                        throw new Error("Missing or Invalid input for height of : ".concat(req.query.height));
+                    }
+                    return [4 /*yield*/, (0, imageprocessingService_1.default)(Number(req.query.width), Number(req.query.height))];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/, res.status(200).sendFile(path_1.default.resolve("thumbnails/encenadport_".concat(req.query.width, "_").concat(req.query.height, ".jpg")))];
             }
-            res.status(200).send("All thumbnails deleted");
         });
-        return [2 /*return*/];
     });
-}); });
+});
+image.delete("/:deletethumbnails", function (req, res) {
+    return __awaiter(void 0, void 0, void 0, function () {
+        var directory;
+        return __generator(this, function (_a) {
+            directory = "thumbnails";
+            fs_1.default.readdir(directory, function (err, files) {
+                if (err)
+                    throw err;
+                for (var _i = 0, files_1 = files; _i < files_1.length; _i++) {
+                    var file = files_1[_i];
+                    fs_1.default.unlink(path_1.default.join(directory, file), function (err) {
+                        if (err)
+                            throw err;
+                    });
+                }
+                return res.status(200).send("All thumbnails deleted");
+            });
+            return [2 /*return*/];
+        });
+    });
+});
 exports.default = image;
