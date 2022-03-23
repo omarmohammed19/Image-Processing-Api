@@ -4,11 +4,16 @@ import fs from 'fs';
 
 const request = supertest(app);
 
-describe('Test endpoint responses', () => {
-    it('checks the api response status', async () => {
+describe('Test endpoints responses', () => {
+    it('checks the api resizing response status', async () => {
         const response = await request.get('/api/imageprocessing?width=200&height=200')
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBeDefined();
+    });
+
+    it('checks the api deletion response status', async () => {
+        const response = await request.delete('/api/imageprocessing/deletethumbnails')
+        expect(response.statusCode).toBe(200);
     });
 });
 

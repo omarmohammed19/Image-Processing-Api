@@ -42,8 +42,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var __1 = __importDefault(require("../../.."));
 var request = (0, supertest_1.default)(__1.default);
-describe('Test endpoint responses', function () {
-    it('checks the api response status', function () { return __awaiter(void 0, void 0, void 0, function () {
+describe('Test endpoints responses', function () {
+    it('checks the api resizing response status', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -52,6 +52,18 @@ describe('Test endpoint responses', function () {
                     response = _a.sent();
                     expect(response.statusCode).toBe(200);
                     expect(response.body.length).toBeDefined();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('checks the api deletion response status', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.delete('/api/imageprocessing/deletethumbnails')];
+                case 1:
+                    response = _a.sent();
+                    expect(response.statusCode).toBe(200);
                     return [2 /*return*/];
             }
         });
@@ -73,7 +85,7 @@ describe('Check input values', function () {
             }
         });
     }); });
-    it('checks the height value', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('checks that the height value is a number', function () { return __awaiter(void 0, void 0, void 0, function () {
         var height, response;
         return __generator(this, function (_a) {
             switch (_a.label) {

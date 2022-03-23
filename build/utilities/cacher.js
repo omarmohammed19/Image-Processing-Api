@@ -9,6 +9,8 @@ var cacher = function (req, res, next) {
     if (fs_1.default.existsSync("thumbnails/encenadport_".concat(req.query.width, "_").concat(req.query.height, ".jpg"))) {
         res.status(200).sendFile(path_1.default.resolve("thumbnails/encenadport_".concat(req.query.width, "_").concat(req.query.height, ".jpg")));
     }
-    next();
+    else {
+        next();
+    }
 };
 exports.default = cacher;

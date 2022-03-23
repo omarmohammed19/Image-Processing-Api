@@ -62,9 +62,28 @@ image.get("/", cacher_1.default, function (req, res) { return __awaiter(void 0, 
                         .toFile("thumbnails/encenadport_".concat(req.query.width, "_").concat(req.query.height, ".jpg"))];
             case 1:
                 _a.sent();
-                res.status(200).sendFile(path_1.default.resolve("thumbnails/encenadaort_".concat(req.query.width, "_").concat(req.query.height, ".jpg")));
+                res.status(200).sendFile(path_1.default.resolve("thumbnails/encenadport_".concat(req.query.width, "_").concat(req.query.height, ".jpg")));
                 return [2 /*return*/];
         }
+    });
+}); });
+image.delete("/:deletethumbnails", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var directory;
+    return __generator(this, function (_a) {
+        directory = "thumbnails";
+        fs_1.default.readdir(directory, function (err, files) {
+            if (err)
+                throw err;
+            for (var _i = 0, files_1 = files; _i < files_1.length; _i++) {
+                var file = files_1[_i];
+                fs_1.default.unlink(path_1.default.join(directory, file), function (err) {
+                    if (err)
+                        throw err;
+                });
+            }
+            res.status(200).send("All thumbnails deleted");
+        });
+        return [2 /*return*/];
     });
 }); });
 exports.default = image;
