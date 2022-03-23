@@ -46,6 +46,10 @@ http://localhost:3000/api/imageprocessing?width=500&height=500
 
 This endpoint displays an image with 500x500 pixels and by changing the numbers and reloading the page the image will be resized
 
+http://localhost:3000/api/imageprocessing/deletethumbnails
+
+This Endpoint empties the thumbnail directory from all the previously processed images
+
 # Version History
 
 * 1.0
