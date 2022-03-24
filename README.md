@@ -37,9 +37,10 @@ sharp
 
 # Executing the Program
 * Open the terminal
-* Enter 'npm run start'
+* Run 'npm install'
+* Run 'npm run start'
 * Copy the URL to ypur browser
-* Change the Pixels
+* Play with the Pixels
 
 # Available Endpoints
 http://localhost:3000/api/imageprocessing?width=500&height=500
