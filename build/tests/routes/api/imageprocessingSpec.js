@@ -39,6 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 var supertest_1 = __importDefault(require("supertest"));
 var __1 = __importDefault(require("../../.."));
 var imageprocessingService_1 = __importDefault(require("../../../routes/api/imageprocessingService"));
@@ -48,7 +50,7 @@ describe('Test endpoints responses', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/imageprocessing?width=200&height=200')];
+                case 0: return [4 /*yield*/, request.get('/api/imageprocessing?filename=encenadaport.jpg&width=200&height=200')];
                 case 1:
                     response = _a.sent();
                     expect(response.statusCode).toBe(200);
@@ -72,36 +74,24 @@ describe('Test endpoints responses', function () {
 });
 describe('Image Processing', function () {
     it('checks the processing of the image', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var testWidth, testHeight, response;
+        var testWidth, testHeight, filename, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    testWidth = 500, testHeight = 500;
-                    return [4 /*yield*/, request.get('/api/imageprocessing?width=200&height=200')];
+                    testWidth = 500, testHeight = 500, filename = 'encenadaport.jpg';
+                    return [4 /*yield*/, request.get('/api/imageprocessing?filename=encenadaport.jpg&width=200&height=200')];
                 case 1:
                     response = _a.sent();
                     expect(function () { return __awaiter(void 0, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
-                                case 0: return [4 /*yield*/, (0, imageprocessingService_1.default)(testWidth, testHeight)];
+                                case 0: return [4 /*yield*/, (0, imageprocessingService_1.default)(filename, testWidth, testHeight)];
                                 case 1:
                                     _a.sent();
                                     return [2 /*return*/];
                             }
                         });
                     }); }).not.toThrow();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it('checks the api deletion response status', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.delete('/api/imageprocessing/deletethumbnails')];
-                case 1:
-                    response = _a.sent();
-                    expect(response.statusCode).toBe(200);
                     return [2 /*return*/];
             }
         });
@@ -114,7 +104,7 @@ describe('Check input values', function () {
             switch (_a.label) {
                 case 0:
                     width = 500;
-                    return [4 /*yield*/, request.get("/api/imageprocessing?width=".concat(width, "&height=200"))];
+                    return [4 /*yield*/, request.get("/api/imageprocessing?filename=encenadaport.jpg&width=".concat(width, "&height=200"))];
                 case 1:
                     response = _a.sent();
                     expect(width).toBeGreaterThan(0);
@@ -129,7 +119,7 @@ describe('Check input values', function () {
             switch (_a.label) {
                 case 0:
                     height = 500;
-                    return [4 /*yield*/, request.get("/api/imageprocessing?width=200&height=".concat(height))];
+                    return [4 /*yield*/, request.get("/api/imageprocessing?filename=encenadaport.jpg&width=200&height=".concat(height))];
                 case 1:
                     response = _a.sent();
                     expect(height).not.toBeNaN;

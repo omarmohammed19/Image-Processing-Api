@@ -45,37 +45,45 @@ var fs_1 = __importDefault(require("fs"));
 var imageprocessingService_1 = __importDefault(require("./imageprocessingService"));
 var cacher_1 = __importDefault(require("../../utilities/cacher"));
 var image = express_1.default.Router();
-image.get("/", cacher_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+image.get('/', cacher_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var filename;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 try {
-                    if (!fs_1.default.existsSync("thumbnails")) {
-                        fs_1.default.mkdirSync("thumbnails");
+                    if (!fs_1.default.existsSync('thumbnails')) {
+                        fs_1.default.mkdirSync('thumbnails');
                     }
                 }
                 catch (err) {
                     res.send(err);
                 }
-                if (Number(req.query.width) <= 0 || Number(req.query.width) == null) {
-                    res.send("Missing or Invalid input for width of : ".concat(req.query.width));
-                    throw new Error("Missing or Invalid input for width of : ".concat(req.query.width));
-                }
-                if (Number(req.query.height) <= 0 || Number(req.query.height) == null) {
-                    res.send("Missing or Invalid input for height of : ".concat(req.query.height));
-                    throw new Error("Missing or Invalid input for height of : ".concat(req.query.height));
-                }
-                return [4 /*yield*/, (0, imageprocessingService_1.default)(Number(req.query.width), Number(req.query.height))];
+                filename = fs_1.default.existsSync(path_1.default.resolve("public/assests/".concat(req.query.filename)));
+                if (!(filename === true)) return [3 /*break*/, 5];
+                if (!(Number(req.query.width) <= 0 || Number(req.query.width) == null)) return [3 /*break*/, 1];
+                res.send("Missing or Invalid input for width of : ".concat(req.query.width));
+                return [3 /*break*/, 4];
             case 1:
+                if (!(Number(req.query.height) <= 0 || Number(req.query.height) == null)) return [3 /*break*/, 2];
+                res.send("Missing or Invalid input for height of : ".concat(req.query.height));
+                return [3 /*break*/, 4];
+            case 2: return [4 /*yield*/, (0, imageprocessingService_1.default)(String(req.query.filename), Number(req.query.width), Number(req.query.height))];
+            case 3:
                 _a.sent();
-                return [2 /*return*/, res.status(200).sendFile(path_1.default.resolve("thumbnails/encenadport_".concat(req.query.width, "_").concat(req.query.height, ".jpg")))];
+                res.status(200).sendFile(path_1.default.resolve("thumbnails/".concat(req.query.filename, "_").concat(req.query.width, "_").concat(req.query.height, ".jpg")));
+                _a.label = 4;
+            case 4: return [3 /*break*/, 6];
+            case 5:
+                res.send("Filename doesn't exist");
+                _a.label = 6;
+            case 6: return [2 /*return*/];
         }
     });
 }); });
-image.delete("/:deletethumbnails", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+image.delete('/:deletethumbnails', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var directory;
     return __generator(this, function (_a) {
-        directory = "thumbnails";
+        directory = 'thumbnails';
         fs_1.default.readdir(directory, function (err, files) {
             if (err)
                 throw err;
@@ -86,7 +94,7 @@ image.delete("/:deletethumbnails", function (req, res) { return __awaiter(void 0
                         throw err;
                 });
             }
-            return res.status(200).send("All thumbnails deleted");
+            res.status(200).send('All thumbnails deleted');
         });
         return [2 /*return*/];
     });

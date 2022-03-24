@@ -40,12 +40,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var sharp_1 = __importDefault(require("sharp"));
-var imageprocessing = function (width, height) { return __awaiter(void 0, void 0, void 0, function () {
+var imageprocessing = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, sharp_1.default)('public/assests/encenadaport.jpg')
-                    .resize(width, height)
-                    .toFile("thumbnails/encenadport_".concat(width, "_").concat(height, ".jpg"))];
+            case 0: return [4 /*yield*/, (0, sharp_1.default)("public/assests/".concat(filename)).resize(width, height).toFile("thumbnails/".concat(filename, "_").concat(width, "_").concat(height, ".jpg"))];
             case 1:
                 _a.sent();
                 return [2 /*return*/];

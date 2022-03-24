@@ -8,5 +8,5 @@ var routes_1 = __importDefault(require("./routes"));
 var app = (0, express_1.default)();
 var port = 3000;
 app.use('/api', routes_1.default);
-app.listen(port, function () { return console.log("listening on http://localhost:".concat(port, "/api/imageprocessing?width=500&height=500 !")); });
+app.listen(port, function () { return console.log("listening on http://localhost:".concat(port, "/api/imageprocessing?filename=encenadaport.jpg&width=500&height=500 !")); });
 exports.default = app;
