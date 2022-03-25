@@ -9,8 +9,6 @@ import cacher from '../../utilities/cacher';
 const image = express.Router();
 
 image.get('/', cacher, async (req: express.Request, res: express.Response): Promise<void> => {
-    const width: number = Number(req.query.width);
-    const height: number = Number(req.query.height);
     try {
         if (!fs.existsSync('thumbnails')) {
             fs.mkdirSync('thumbnails');
@@ -21,9 +19,9 @@ image.get('/', cacher, async (req: express.Request, res: express.Response): Prom
     const filename: boolean = fs.existsSync(path.resolve(`public/assests/${req.query.filename}`));
     try {
         if (filename === true) {
-            if (Number(req.query.width) <= 0 || Number(req.query.width) == null || typeof width !== 'number') {
+            if (Number(req.query.width) <= 0 || Number(req.query.width) == null) {
                 res.send(`Missing or Invalid input for width of : ${req.query.width}`);
-            } else if (Number(req.query.height) <= 0 || Number(req.query.height) == null || typeof height !== 'number') {
+            } else if (Number(req.query.height) <= 0 || Number(req.query.height) == null) {
                 res.send(`Missing or Invalid input for height of : ${req.query.height}`);
             } else {
                 await imageprocessing(String(req.query.filename), Number(req.query.width), Number(req.query.height));
