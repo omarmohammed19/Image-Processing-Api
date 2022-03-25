@@ -24,7 +24,6 @@ describe('Image Processing', () => {
     const testWidth = 500,
       testHeight = 500,
       filename = 'encenadaport.jpg';
-    const response = await request.get('/api/imageprocessing?filename=encenadaport.jpg&width=200&height=200');
     expect(async () => {
       await imageprocessing(filename, testWidth, testHeight);
     }).not.toThrow();
@@ -34,15 +33,15 @@ describe('Image Processing', () => {
 describe('Check input values', () => {
   it('checks the width is greater than 0', async (): Promise<void> => {
     const width = 500;
-    const response = await request.get(`/api/imageprocessing?filename=encenadaport.jpg&width=${width}&height=200`);
-    expect(width).toBeGreaterThan(0);
-    expect(response.body.length).toBeDefined();
+    expect(async () => {
+      await imageprocessing("fjord.jpg", width, 500);
+    }).not.toThrow();
   });
 
   it('checks that the height value is a number', async (): Promise<void> => {
     const height = 500;
-    const response = await request.get(`/api/imageprocessing?filename=encenadaport.jpg&width=200&height=${height}`);
-    expect(height).not.toBeNaN;
-    expect(response.body.length).toBeDefined();
+    expect(async () => {
+      await imageprocessing("fjord.jpg", 500, height);
+    }).not.toThrow();
   });
 });
