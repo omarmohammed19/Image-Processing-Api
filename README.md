@@ -39,7 +39,7 @@ sharp
 * Open the terminal
 * Run 'npm install'
 * Run 'npm run start'
-* Copy the URL to ypur browser
+* Copy the URL to your browser
 * Play with the Pixels
 
 # Available Endpoints
